@@ -1,8 +1,59 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+* {
+  box-sizing: border-box;
 }
 
-a {
-  color: #00B7FF;
+body {
+  padding-top: 56px;
 }
+
+/* Navigation Menu Style Start */
+
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: rgb(20, 20, 20);
+  z-index: 5;
+}
+
+nav.navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav.navbar .navbar-collapse {
+  flex-grow: unset;
+}
+
+nav.navbar .navbar-collapse ul {
+  margin-left: 20px;
+}
+
+/* Navigation Menu Style End */
+
+/*Shop styles start*/
+
+.shop {
+  position: relative;
+  max-width: 1000px;
+  margin: 50px auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.shop .card {
+  max-width: 18rem;
+  display: inline-block;
+  margin: 0 auto 20px;
+}
+
+.shop .card a {
+  margin-bottom: 5px;
+}
+
+/*Shop styles end*/

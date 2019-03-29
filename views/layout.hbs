@@ -2,14 +2,56 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+      <link rel='stylesheet' href='/stylesheets/style.css'/>
   </head>
   <body>
+  <!--navigation menu start-->
+  <header>
+      <nav class="navbar navbar-expand-sm navbar-dark">
+          <!--brand-->
+          <a class="navbar-brand" href="#">My Logo</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!--collapsible nav menu with search-->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <!--search-->
+              <form class="form-inline my-2 my-sm-0">
+                  <div class="input-group">
+                      <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                      <div class="input-group-append">
+                          <button class="btn btn-info" type="submit"><i class="fas fa-search"></i></button>
+                      </div>
+                  </div>
+              </form>
+              <!--navigation menu-->
+              <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Cart</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-user"></i> User Management
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="#">Sign Up</a>
+                          <a class="dropdown-item" href="#">Sign In</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Logout</a>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+      </nav>
+  </header>
+  <!--navigation menu end-->
     {{{body}}}
   </body>
 </html>
