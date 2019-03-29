@@ -4,6 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+let hbs = require('hbs');
+let session = require('express-session');
+let passport = require('passport');
+// let MongoStore = require('connect-mongo')(session);
+
+let db = require('./dbconfig/dbConnect');
+
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -12,10 +19,22 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+hbs.registerPartials(__dirname + '/views/partials');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+/*session tracking*/
+app.use(session({
+  secret:'mykey',
+  resave: false,
+  saveUninitialized: false,
+  /*store: new MongoStore({url: 'mongodb://localhost/shop'}),
+  cookie: { maxAge: 180 * 60 * 1000 }*/
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -34,6 +53,16 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+/*connecting to db*/
+db.connect(function (err) {
+  if(err){
+    console.log("Unable to connect to database");
+    process.exit(1);
+  }else{
+    console.log("Database connected");
+  }
 });
 
 module.exports = app;

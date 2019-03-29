@@ -48,8 +48,25 @@ nav.navbar .navbar-collapse ul {
 
 .shop .card {
   max-width: 18rem;
-  display: inline-block;
+  max-height: 400px;
+  display: inline-flex;
   margin: 0 auto 20px;
+  border: 1px solid rgb(200, 200, 200);
+}
+
+.shop .card:hover {
+  box-shadow: 0 0 10px grey;
+}
+
+.shop .card .card-text {
+  height: 100px;
+  overflow: hidden;
+  /*hide overflow above four lines*/
+  /*display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;*/
 }
 
 .shop .card a {
@@ -57,3 +74,22 @@ nav.navbar .navbar-collapse ul {
 }
 
 /*Shop styles end*/
+
+/*sign up page styles start*/
+
+section#signup .row{
+  height: 500px;
+  justify-content: center;
+  align-content: center;
+}
+
+section#signup .row h3 {
+  text-align: center;
+}
+
+section#signup .row form {
+  margin: 20px auto;
+  padding: 20px 40px;
+}
+
+/*sign up page styles start*/
