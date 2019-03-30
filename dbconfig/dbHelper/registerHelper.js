@@ -6,16 +6,12 @@ let registerUser = function (email, password, callback) {
       password: password
   }, function (err) {
         if(err) {
-            callback(false);
-        }else{
-            callback(true);
+            return callback(err);
         }
+        return callback(false);
     })
 };
-let showcol = () => {
-    const col = db.get().collection('user');
-    console.log(col.find());
-};
+
 module.exports = {
-    registerUser, showcol
+    registerUser
 };

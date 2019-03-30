@@ -7,12 +7,12 @@ let state = {
 let connect = function(done) {
     let url = 'mongodb://localhost:27017';
 
-    mongodb.connect(url, function (err, db) {
+    mongodb.connect(url, {useNewUrlParser: true}, function (err, db) {
         if(err)
             return done(err);
 
         state.db = db.db('shop');
-        done();
+        return done();
     })
 };
 

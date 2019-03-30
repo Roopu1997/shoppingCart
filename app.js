@@ -7,6 +7,7 @@ var logger = require('morgan');
 let hbs = require('hbs');
 let session = require('express-session');
 let passport = require('passport');
+let flash = require('connect-flash');
 // let MongoStore = require('connect-mongo')(session);
 
 let db = require('./dbconfig/dbConnect');
@@ -14,6 +15,17 @@ let db = require('./dbconfig/dbConnect');
 var indexRouter = require('./routes/index');
 
 var app = express();
+
+/*connecting to db*/
+db.connect(function (err) {
+  if(err){
+    console.log("Unable to connect to database");
+    process.exit(1);
+  }else{
+    console.log("Database connected");
+  }
+});
+require('./config/passport');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,6 +45,7 @@ app.use(session({
   /*store: new MongoStore({url: 'mongodb://localhost/shop'}),
   cookie: { maxAge: 180 * 60 * 1000 }*/
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -53,16 +66,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-/*connecting to db*/
-db.connect(function (err) {
-  if(err){
-    console.log("Unable to connect to database");
-    process.exit(1);
-  }else{
-    console.log("Database connected");
-  }
 });
 
 module.exports = app;
