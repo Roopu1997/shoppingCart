@@ -2,58 +2,16 @@
 
 <!--shop items-->
 <div class="shop">
-    <div class="card">
-        <img src="https://images.gog.com/60c724a052275a049d857d53957dc38e9347742f52372bb956d992b43efa8fb5_product_card_v2_mobile_slider_639.jpg" class="card-img-top" alt="The Witcher 3">
-        <div class="card-body">
-            <h5 class="card-title">The Witcher 3</h5>
-            <p class="card-text">The Witcher 3: Wild Hunt is a 2015 action role-playing game developed and published by CD Projekt.</p>
-            <span class="btn"><b>$40</b></span>
-            <a href="#" class="btn btn-success float-right">Add to Cart</a>
+    {{#each items}}
+        <div class="card">
+            <img src="{{this.iImg}}" class="card-img-top" alt="{{this.iName}}">
+            <div class="card-body">
+                <h5 class="card-title">{{this.iName}}</h5>
+                <hr>
+                <p class="card-text">{{this.iDesc}}</p>
+                <span class="btn"><b>${{this.iPrice}}</b></span>
+                <a href="#" class="btn btn-success float-right">Add to Cart</a>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        <img src="https://images.gog.com/60c724a052275a049d857d53957dc38e9347742f52372bb956d992b43efa8fb5_product_card_v2_mobile_slider_639.jpg" class="card-img-top" alt="The Witcher 3">
-        <div class="card-body">
-            <h5 class="card-title">The Witcher 3</h5>
-            <p class="card-text">The Witcher 3: Wild Hunt is a 2015 action role-playing game developed and published by CD Projekt.</p>
-            <span class="btn"><b>$40</b></span>
-            <a href="#" class="btn btn-success float-right">Add to Cart</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="https://images.gog.com/60c724a052275a049d857d53957dc38e9347742f52372bb956d992b43efa8fb5_product_card_v2_mobile_slider_639.jpg" class="card-img-top" alt="The Witcher 3">
-        <div class="card-body">
-            <h5 class="card-title">The Witcher 3</h5>
-            <p class="card-text">The Witcher 3: Wild Hunt is a 2015 action role-playing game developed and published by CD Projekt.</p>
-            <span class="btn"><b>$40</b></span>
-            <a href="#" class="btn btn-success float-right">Add to Cart</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="https://images.gog.com/60c724a052275a049d857d53957dc38e9347742f52372bb956d992b43efa8fb5_product_card_v2_mobile_slider_639.jpg" class="card-img-top" alt="The Witcher 3">
-        <div class="card-body">
-            <h5 class="card-title">The Witcher 3</h5>
-            <p class="card-text">The Witcher 3: Wild Hunt is a 2015 action role-playing game developed and published by CD Projekt.</p>
-            <span class="btn"><b>$40</b></span>
-            <a href="#" class="btn btn-success float-right">Add to Cart</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="https://images.gog.com/60c724a052275a049d857d53957dc38e9347742f52372bb956d992b43efa8fb5_product_card_v2_mobile_slider_639.jpg" class="card-img-top" alt="The Witcher 3">
-        <div class="card-body">
-            <h5 class="card-title">The Witcher 3</h5>
-            <p class="card-text">The Witcher 3: Wild Hunt is a 2015 action role-playing game developed and published by CD Projekt.</p>
-            <span class="btn"><b>$40</b></span>
-            <a href="#" class="btn btn-success float-right">Add to Cart</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="https://images.gog.com/60c724a052275a049d857d53957dc38e9347742f52372bb956d992b43efa8fb5_product_card_v2_mobile_slider_639.jpg" class="card-img-top" alt="The Witcher 3">
-        <div class="card-body">
-            <h5 class="card-title">The Witcher 3</h5>
-            <p class="card-text">The Witcher 3: Wild Hunt is a 2015 action role-playing game developed and published by CD Projekt.</p>
-            <span class="btn"><b>$40</b></span>
-            <a href="#" class="btn btn-success float-right">Add to Cart</a>
-        </div>
-    </div>
+    {{/each}}
 </div>

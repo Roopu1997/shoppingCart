@@ -18,12 +18,12 @@ passport.deserializeUser((id, done) => {
 });*/
 
 passport.serializeUser(function(user, done) {
-    console.log("serialize");
+    // console.log("serialize");
     done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-    console.log("deserialize");
+    // console.log("deserialize");
     done(null, user);
 });
 
@@ -32,12 +32,10 @@ passport.use('local-signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function(req, email, password, done) {
-        console.log("local");
         let User = db.get().collection('user');
         User.findOne({ email: email }, function (err, user) {
             if (err) { return done(err); }
-            if (user) { return done(null, false, {message: 'Email already in use.'}); }
-            console.log('localfind');
+            if (user) { return done(null, false, {message: 'Email already in use!'}); }
             //use for passing with register user
             let newUser = {
                 email: email,
@@ -51,6 +49,21 @@ passport.use('local-signup', new LocalStrategy({
                 console.log("User added");
                 return done(null, newUser);
             });
+        });
+    }
+));
+
+passport.use('local-signin', new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true
+    }, function(req, email, password, done) {
+        let User = db.get().collection('user');
+        User.findOne({ email: email }, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false, {message: 'No Such User!'}); }
+            if (!(password === user.password)) { return done(null, false, {message: 'Wrong Password!'}); }
+            return done(null, user);
         });
     }
 ));

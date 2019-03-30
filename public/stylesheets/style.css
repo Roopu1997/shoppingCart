@@ -75,21 +75,61 @@ nav.navbar .navbar-collapse ul {
 
 /*Shop styles end*/
 
-/*sign up page styles start*/
+/*User Pages Start*/
+/*signup / signin page styles start*/
 
-section#signup .row{
+section.login .row{
   height: 500px;
   justify-content: center;
   align-content: center;
 }
 
-section#signup .row h3 {
+section.login .row h3 {
   text-align: center;
 }
 
-section#signup .row form {
+section.login .row form {
   margin: 20px auto;
   padding: 20px 40px;
 }
 
-/*sign up page styles start*/
+/*signup / signin page styles end*/
+
+/*User Profile Styles start*/
+
+section.profile .row{
+  height: 500px;
+  justify-content: center;
+  align-content: center;
+}
+
+section.profile .row h3 {
+  text-align: center;
+}
+
+/*User Profile Styles end*/
+/*User Pages End*/
+
+/*Admin Pages Start*/
+
+/*Add item to inventory*/
+section.item>.row{
+  margin-top: 70px;
+  justify-content: center;
+  align-content: center;
+}
+
+section.item .row h3 {
+  text-align: center;
+}
+
+section.item .row form {
+  margin: 20px auto;
+  padding: 20px 40px;
+}
+
+section.item .row form textarea {
+  resize: none;
+}
+
+/*Admin Pages Start*/

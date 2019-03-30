@@ -1,0 +1,39 @@
+<!--signup page-->
+<section class="item">
+    <div class="row">
+        <div class="col-6">
+            <h3>Add new items to Inventory</h3>
+            {{#if hasMessage}}
+                <div class="alert alert-success">
+                    {{message}}
+                </div>
+            {{/if}}
+            <form action="/additem" method="post">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label for="iName">Item Name</label>
+                            <input type="text" class="form-control" id="iName" name="iName" placeholder="Enter Item Name">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="iPrice">Item Price ($)</label>
+                            <input type="text" class="form-control" id="iPrice" name="iPrice" placeholder="Enter Price">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="iImg">Item Image</label>
+                    <input type="text" class="form-control" id="iImg" name="iImg" placeholder="Image Link">
+                </div>
+                <div class="form-group">
+                    <label for="iDesc">Item Description</label>
+                    <textarea class="form-control" rows="3" id="iDesc" name="iDesc" placeholder="Enter Item Description"></textarea>
+                </div>
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                <button type="submit" class="btn btn-info float-right">Add Item</button>
+            </form>
+        </div>
+    </div>
+</section>
