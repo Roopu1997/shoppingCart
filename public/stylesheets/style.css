@@ -25,6 +25,10 @@ nav.navbar {
   justify-content: space-between;
 }
 
+nav.navbar span.badge {
+  background: rgba(255,255,255,0.5);
+}
+
 nav.navbar .navbar-collapse {
   flex-grow: unset;
 }

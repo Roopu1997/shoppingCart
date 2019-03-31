@@ -4,9 +4,11 @@
         <div class="col-6">
             <h3>Sign Up</h3>
             {{#if hasErrors}}
-                <div class="alert alert-danger">
-                    {{message}}
-                </div>
+                {{#each messages}}
+                    <div class="alert alert-danger">
+                        {{this}}
+                    </div>
+                {{/each}}
             {{/if}}
             <form action="/signup" method="post">
                 <div class="form-group">

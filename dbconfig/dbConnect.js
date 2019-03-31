@@ -10,7 +10,6 @@ let connect = function(done) {
     mongodb.connect(url, {useNewUrlParser: true}, function (err, db) {
         if(err)
             return done(err);
-
         state.db = db.db('shop');
         return done();
     })

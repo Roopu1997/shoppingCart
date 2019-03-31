@@ -8,6 +8,7 @@ let hbs = require('hbs');
 let session = require('express-session');
 let passport = require('passport');
 let flash = require('connect-flash');
+let validator = require('express-validator');
 // let MongoStore = require('connect-mongo')(session);
 
 let db = require('./dbconfig/dbConnect');
@@ -36,6 +37,7 @@ hbs.registerPartials(__dirname + '/views/partials');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(validator());
 app.use(cookieParser());
 /*session tracking*/
 app.use(session({
@@ -52,7 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   res.locals.login = req.isAuthenticated();
-  // res.locals.session = req.session;
+  res.locals.session = req.session;
   // res.locals.user = req.user;
   next();
 });

@@ -1,6 +1,9 @@
 <!--add a slide show featured items-->
 
 <!--shop items-->
+{{#if hasMessage}}
+    <div class="alert alert-success mt-5">{{messages}}</div>
+{{/if}}
 <div class="shop">
     {{#each items}}
         <div class="card">
@@ -10,7 +13,7 @@
                 <hr>
                 <p class="card-text">{{this.iDesc}}</p>
                 <span class="btn"><b>${{this.iPrice}}</b></span>
-                <a href="#" class="btn btn-success float-right">Add to Cart</a>
+                <a href="/addtocart/{{this.iName}}" class="btn btn-success float-right">Add to Cart</a>
             </div>
         </div>
     {{/each}}
