@@ -15,8 +15,8 @@ router.get('/', function(req, res, next) {
   inventoryHelper.readItem(function(err, items) {
     let messages = req.flash('info');
     // console.log(req.session);
-    console.log(req.session.cart);
-    res.render('index', { title: 'Welcome to My Shop', items: items, messages: messages, hasMessage: messages.length > 0 });
+    // console.log(req.session.cart);
+    res.render('shop/index', { title: 'Welcome to My Shop', items: items, messages: messages, hasMessage: messages.length > 0 });
   });
 });
 let c = 1;
@@ -80,9 +80,9 @@ router.get('/addtocart/:iName', function (req, res, next) {
         totalPrice: item.iPrice
       };
     }*/
-    if(req.session.cart){
+    /*if(req.session.cart){
       console.log(req.session.cart)
-    }
+    }*/
     let cart = req.session.cart;
     let Cart = {};
     let items = {};
@@ -133,7 +133,54 @@ router.get('/addtocart/:iName', function (req, res, next) {
   });
 });
 
-/*Shop routes start*/
+router.get('/cart', function(req, res, next) {
+  inventoryHelper.readItem(function(err, items) {
+    // let messages = req.flash('info');
+    // console.log(req.session);
+    // console.log(req.session.cart);
+    res.render('shop/cart', { title: 'Shopping Cart' });
+  });
+});
+
+//reduce cart item
+router.get('/reduceitem/:iName', function(req, res, next) {
+  let iName = req.params.iName;
+  // console.log(iName);
+  let Cart = req.session.cart;
+  Cart.items[iName].qty--;
+  Cart.items[iName].price -= parseFloat(Cart.items[iName].item.iPrice);
+  req.session.cart.totalQty--;
+  req.session.cart.totalPrice -= parseFloat(Cart.items[iName].item.iPrice);
+  if(Cart.totalQty === 0) {
+    delete req.session.cart;
+  }
+  else if(Cart.items[iName].qty === 0) {
+    delete Cart.items[iName];
+  }
+  res.redirect('/cart');
+});
+
+//remove cart item
+router.get('/removeitem/:iName', function(req, res, next) {
+  let iName = req.params.iName;
+  // console.log(iName);
+  let Cart = req.session.cart;
+  req.session.cart.totalQty -= Cart.items[iName].qty;
+  req.session.cart.totalPrice -= Cart.items[iName].price;
+  if(Cart.totalQty === 0) {
+    delete req.session.cart;
+  }
+  else {
+    delete Cart.items[iName];
+  }
+  res.redirect('/cart');
+});
+
+router.get('/checkout', function(req, res, next) {
+  res.render('shop/checkout', { title: 'Make Payment' });
+});
+
+/*Shop routes end*/
 
 /*User Management Start*/
 /*sign up page*/
@@ -186,7 +233,9 @@ router.get('/profile', isLoggedIn, function(req, res, next) {
 
 router.get('/logout', isLoggedIn, function(req, res, next) {
   req.logout();
-  res.redirect('/');
+  req.session.destroy(function (err) {
+    res.redirect('/');
+  });
 });
 /*User Management End*/
 

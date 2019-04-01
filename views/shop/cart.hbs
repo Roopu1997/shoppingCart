@@ -1,0 +1,27 @@
+<!--cart page-->
+<section class="cart">
+    <h3>{{title}}</h3>
+    <div class="row">
+        <div class="col-7">
+            {{#if session.cart}}
+                <ul class="list-group list-group-flush">
+                    {{#each session.cart.items}}
+                        <li class="list-group-item">
+                            {{this.item.iName}}
+                            <span class="badge badge-dark">x{{this.qty}}</span>
+                            <a href="/removeitem/{{this.item.iName}}" class="btn btn-danger btn-xs"  title="Remove item">x</a>
+                            <a href="/reduceitem/{{this.item.iName}}" class="btn btn-warning btn-xs" title="Reduce item">-</a>
+                            <span class="price">${{this.price}}</span>
+                        </li>
+                    {{/each}}
+                    <li class="list-group-item total">
+                        <span class="price">Total Price: ${{session.cart.totalPrice}}</span>
+                    </li>
+                </ul>
+                <a href="/checkout" class="btn btn-success">Checkout</a>
+            {{ else }}
+                <div class="msg">No items in Cart!</div>
+            {{/if}}
+        </div>
+    </div>
+</section>

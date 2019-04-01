@@ -77,6 +77,88 @@ nav.navbar .navbar-collapse ul {
   margin-bottom: 5px;
 }
 
+/*cart styles*/
+section.cart .row{
+  justify-content: center;
+  /*min-height: 500px;*/
+}
+
+section.cart h3 {
+  margin-top: 50px;
+  text-align: center;
+}
+
+section.cart .row .msg {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+section.cart .row ul {
+  margin-top: 10px;
+}
+
+section.cart .row .price {
+  float: right;
+  font-weight: 600;
+}
+
+section.cart .row .total {
+  border-bottom: none;
+}
+
+section.cart .row ul a.btn {
+  position: initial;
+  float: right;
+  margin: 0 2px;
+}
+
+.btn-group-xs > .btn, .btn-xs {
+  padding: .25rem .4rem;
+  font-size: .875rem;
+  line-height: .5;
+  border-radius: .2rem;
+}
+
+/*section.cart .row div.btn-group .btn-sm {
+  padding: 2px 5px;
+  font-size: 10px;
+}
+
+section.cart .row div.btn-group .dropdown-toggle::after {
+  margin-left: 0;
+  vertical-align: 2px;
+}*/
+
+section.cart .row a.btn {
+  position: relative;
+  top: 30px;
+  right: 30px;
+  float: right;
+}
+
+/*checkout styles*/
+section.checkout .row form textarea {
+  resize: none;
+}
+section.checkout .row{
+  justify-content: center;
+}
+
+section.checkout h3 {
+  margin-top: 50px;
+  text-align: center;
+}
+
+section.checkout .row form {
+  margin: 20px auto;
+  padding: 20px 40px;
+}
+
+section.checkout .row form .price{
+  font-weight: 600;
+}
+
 /*Shop styles end*/
 
 /*User Pages Start*/
@@ -136,4 +218,16 @@ section.item .row form textarea {
   resize: none;
 }
 
-/*Admin Pages Start*/
+/*Admin Pages End*/
+
+/*Footer style start*/
+
+/*footer {
+  display: block;
+  color: white;
+  margin-bottom: 0;
+  background: rgba(0,0,0,0.9);
+  text-align: center;
+}*/
+
+/*Footer style end*/

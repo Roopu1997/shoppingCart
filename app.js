@@ -9,7 +9,7 @@ let session = require('express-session');
 let passport = require('passport');
 let flash = require('connect-flash');
 let validator = require('express-validator');
-// let MongoStore = require('connect-mongo')(session);
+let MongoStore = require('connect-mongo')(session);
 
 let db = require('./dbconfig/dbConnect');
 
@@ -44,8 +44,8 @@ app.use(session({
   secret:'mykey',
   resave: false,
   saveUninitialized: false,
-  /*store: new MongoStore({url: 'mongodb://localhost/shop'}),
-  cookie: { maxAge: 180 * 60 * 1000 }*/
+  store: new MongoStore({url: 'mongodb://localhost/shop'}),
+  cookie: { maxAge: 180 * 60 * 1000 }
 }));
 app.use(flash());
 app.use(passport.initialize());
