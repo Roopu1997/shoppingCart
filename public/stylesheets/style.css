@@ -197,14 +197,30 @@ section.login .row form {
 
 /*User Profile Styles start*/
 
+/*cart styles*/
 section.profile .row{
-  height: 500px;
   justify-content: center;
-  align-content: center;
+  /*min-height: 500px;*/
 }
 
-section.profile .row h3 {
+section.profile h3 {
+  margin-top: 50px;
   text-align: center;
+}
+
+section.profile .row .msg {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+section.profile .row ul {
+  margin-top: 10px;
+}
+
+section.profile .row .price {
+  float: right;
+  font-weight: 600;
 }
 
 /*User Profile Styles end*/

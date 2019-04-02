@@ -29,12 +29,12 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {{# if login}}
-                            <a class="dropdown-item" href="/profile">Profile</a>
+                            <a class="dropdown-item" href="/user/profile">Profile</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/logout">Logout</a>
+                            <a class="dropdown-item" href="/user/logout">Logout</a>
                         {{ else }}
-                            <a class="dropdown-item" href="/signup">Sign Up</a>
-                            <a class="dropdown-item" href="/signin">Sign In</a>
+                            <a class="dropdown-item" href="/user/signup">Sign Up</a>
+                            <a class="dropdown-item" href="/user/signin">Sign In</a>
                         {{/if}}
                     </div>
                 </li>

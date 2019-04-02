@@ -5,14 +5,17 @@ let LocalStrategy = require('passport-local').Strategy;
 let registerHelper = require('../dbconfig/dbHelper/registerHelper');
 
 passport.serializeUser(function(user, done) {
-    console.log("serialize");
-    done(null, user._id);
+    // console.log("serialize");
+    // console.log(user.email);
+    done(null, user.email);
 });
 
-passport.deserializeUser(function(id, done) {
-    console.log("deserialize");
+passport.deserializeUser(function(email, done) {
+    // console.log("deserialize");
+    // console.log(email);
     let User = db.get().collection('user');
-    User.find({_id: id}, function (err, user) {
+    User.findOne({email: email}, function (err, user) {
+        // console.log(user);
         done(err, user);
     });
 });

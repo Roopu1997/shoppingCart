@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 let csrf = require('csurf');
-let passport = require('passport');
 
 let inventoryHelper = require('../dbconfig/dbHelper/inventoryHelper');
+let orderHelper = require('../dbconfig/dbHelper/orderHelper');
 
 let csrfProtection = csrf();
 router.use(csrfProtection);
@@ -16,7 +16,12 @@ router.get('/', function(req, res, next) {
     let messages = req.flash('info');
     // console.log(req.session);
     // console.log(req.session.cart);
-    res.render('shop/index', { title: 'Welcome to My Shop', items: items, messages: messages, hasMessage: messages.length > 0 });
+    res.render('shop/index', {
+      title: 'Welcome to My Shop',
+      items: items,
+      messages: messages,
+      hasMessage: messages.length > 0
+    });
   });
 });
 let c = 1;
@@ -176,15 +181,23 @@ router.get('/removeitem/:iName', function(req, res, next) {
   res.redirect('/cart');
 });
 
-router.get('/checkout', function(req, res, next) {
+router.get('/checkout', isLoggedIn, function(req, res, next) {
   let messages = req.flash('error');
-  res.render('shop/checkout', { title: 'Make Payment', csrfToken: req.csrfToken, messages: messages, hasErrors: messages.length > 0});
+  if(req.session.cart) {
+    res.render('shop/checkout', {
+      title: 'Make Payment',
+      csrfToken: req.csrfToken,
+      messages: messages,
+      hasErrors: messages.length > 0
+    });
+  } else {
+    res.redirect('/');
+  }
 });
 
 router.post('/checkout', function(req, res, next) {
-  console.log(req.body.stripeToken);
-  // Set your secret key: remember to change this to your live secret key in production
-  // See your keys here: https://dashboard.stripe.com/account/apikeys
+  // console.log(req.body.stripeToken);
+
   var stripe = require("stripe")("sk_test_xGsPPY56NvVFxpUstNeyfS51");
   let Cart = req.session.cart;
 
@@ -203,76 +216,36 @@ router.post('/checkout', function(req, res, next) {
       res.redirect('/checkout');
     }
     // console.log({charge});
-    delete req.session.cart;
-    req.flash('info','Order Placed successfully');
-    res.redirect('/');
+    let Cart = req.session.cart;
+    let order = {
+      user: req.user,
+      cart: Cart,
+      name: req.body.cName,
+      address: req.body.address,
+      paymentId: charge.id
+    };
+    // console.log(order);
+    orderHelper.newOrder(order, function (err) {
+      delete req.session.cart;
+      req.flash('info','Order Placed successfully');
+      res.redirect('/');
+    })
   });
 });
 
 /*Shop routes end*/
 
-/*User Management Start*/
-/*sign up page*/
-router.get('/signup', notLoggedIn, function(req, res, next) {
-  let messages = req.flash('error');
-  res.render('user/signup', { title: 'Create an Account', csrfToken: req.csrfToken, messages: messages, hasErrors: messages.length > 0});
-});
-
-router.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/profile',
-  failureRedirect: '/signup',
-  failureFlash: true
-})/*, function (req, res) {
-
-  let email = req.body.email;
-  let password = req.body.password;
-
-  console.log(email, password);
-  res.redirect('/');
-
-  /!*registerHelper.registerUser(email, password, function (status) {
-    if(status) {
-      console.log("User added");
-      res.redirect('/');
-    }else{
-      console.log("Error adding user");
-      res.redirect('/signup');
-    }
-  });*!/
-}*/);
-
-/*sign in page*/
-router.get('/signin', notLoggedIn, function(req, res, next) {
-  let messages = req.flash('error');
-  // console.log(req.session);
-  res.render('user/signin', { title: 'Sign in to your Account', csrfToken: req.csrfToken, messages: messages, hasErrors: messages.length > 0});
-});
-
-router.post('/signin', passport.authenticate('local-signin', {
-  successRedirect: '/profile',
-  failureRedirect: '/signin',
-  failureFlash: true
-}));
-
-/*profile route*/
-router.get('/profile', isLoggedIn, function(req, res, next) {
-  // console.log(req.session);
-  res.render('user/profile', { title: 'User Profile' });
-});
-
-router.get('/logout', isLoggedIn, function(req, res, next) {
-  req.logout();
-  // req.session.destroy(function (err) {
-    res.redirect('/');
-  // });
-});
-/*User Management End*/
 
 /*Admin Routes Start*/
 /*Adding items to inventory*/
 router.get('/additem', function (req, res, next) {
   let messages = req.flash('info');
-  res.render('admin/additem', {title: 'Add Items to Inventory', csrfToken: req.csrfToken, message: messages, hasMessage: messages.length > 0});
+  res.render('admin/additem', {
+    title: 'Add Items to Inventory',
+    csrfToken: req.csrfToken,
+    message: messages,
+    hasMessage: messages.length > 0
+  });
 });
 
 router.post('/additem', function (req, res, next) {
@@ -295,20 +268,17 @@ router.post('/additem', function (req, res, next) {
 
 /*Admin Routes End*/
 
-/*Route Protections Start*/
+/*Route Protection Start*/
+
 function isLoggedIn(req, res, next) {
   if(req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/');
+  req.session.oldURL = req.url;
+  // console.log(req.session.oldURL);
+  res.redirect('/user/signin');
 }
 
-function notLoggedIn(req, res, next) {
-  if(!req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/');
-}
-/*Route Protections End*/
+/*Route Protection End*/
 
 module.exports = router;

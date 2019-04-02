@@ -14,6 +14,7 @@ let MongoStore = require('connect-mongo')(session);
 let db = require('./dbconfig/dbConnect');
 
 var indexRouter = require('./routes/index');
+var userRouter = require('./routes/user');
 
 var app = express();
 
@@ -59,6 +60,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/user', userRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

@@ -1,8 +1,21 @@
 <!--Profile page-->
 <section class="profile">
+    <h3>{{title}}({{user}})</h3>
     <div class="row">
-        <div class="col-6">
-            <h3>{{title}}</h3>
+        <div class="col-7">
+            {{#each orders}}
+                <ul class="list-group">
+                    {{#each this.cart.items}}
+                        <li class="list-group-item">
+                            {{this.item.iName}}
+                            <span class="badge badge-dark">x{{this.qty}}</span>
+                            <span class="price">${{this.price}}</span>
+                        </li>
+                    {{/each}}
+                </ul>
+            {{ else }}
+                <div class="msg">No Past Purchases!</div>
+            {{/each}}
         </div>
     </div>
 </section>

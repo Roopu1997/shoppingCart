@@ -24,8 +24,11 @@ var form = document.getElementById('payment-form');
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     document.getElementById('payment-button').setAttribute('disabled', true);
+    let name = document.getElementById('cName').value;
 
-    stripe.createToken(card).then(function(result) {
+    stripe.createToken(card, {
+        name: name
+    }).then(function(result) {
         if (result.error) {
             // Inform the customer that there was an error.
             var errorElement = document.getElementById('card-errors');
