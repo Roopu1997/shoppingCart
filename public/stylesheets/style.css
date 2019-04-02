@@ -159,6 +159,20 @@ section.checkout .row form .price{
   font-weight: 600;
 }
 
+section.checkout .row form .credit-card {
+  padding: 10px 5px;
+  border: 1px rgb(200, 200, 200) solid;
+  border-radius: 5px;
+}
+
+/*section.checkout .row form .credit-card:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}*/
+
 /*Shop styles end*/
 
 /*User Pages Start*/

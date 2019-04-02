@@ -15,18 +15,25 @@
                     {{message}}
                 </div>
             {{/if}}
-            <form action="/checkout" method="post">
+            <div class="alert alert-danger" id="card-errors" role="alert" hidden></div>
+            <form action="/checkout" method="post" id="payment-form">
                 <div class="form-group">
                     <label for="cName">Name on Card</label>
-                    <input type="text" class="form-control" id="cName" name="cName" placeholder="Card Name">
-                </div>
-                <div class="form-group">
-                    <label for="cNumber">Card Number</label>
-                    <input type="text" class="form-control" id="cNumber" name="cNumber" placeholder="Card Number">
+                    <input type="text" class="form-control" id="cName" name="cName" placeholder="Card Holders Name" required>
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <textarea class="form-control" rows="3" id="address" name="address" placeholder="Enter Address"></textarea>
+                    <textarea class="form-control" rows="3" id="address" name="address" placeholder="Enter Address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="card-element">
+                        Credit or debit card
+                    </label>
+                    <div id="card-element" class="credit-card"></div>
+                </div>
+                <!--<div class="form-group">
+                    <label for="cNumber">Card Number</label>
+                    <input type="text" class="form-control" id="cNumber" name="cNumber" placeholder="Card Number">
                 </div>
                 <div class="row">
                     <div class="col-4">
@@ -47,11 +54,30 @@
                             <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVV">
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                 <span class="price">Total Price: ${{session.cart.totalPrice}}</span>
-                <button type="submit" class="btn btn-info float-right">Make Order</button>
+                <button type="submit" class="btn btn-info float-right" id="payment-button">Make Order</button>
             </form>
         </div>
     </div>
 </section>
+
+<!--<form action="#" method="post" id="payment-form">
+    <div class="form-row">
+        <label for="card-element">
+            Credit or debit card
+        </label>
+        <div id="card-element">
+            &lt;!&ndash; A Stripe Element will be inserted here. &ndash;&gt;
+        </div>
+
+        &lt;!&ndash; Used to display Element errors. &ndash;&gt;
+        <div id="card-errors" role="alert"></div>
+    </div>
+
+    <button>Submit Payment</button>
+</form>-->
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="/javascripts/checkout.js"></script>

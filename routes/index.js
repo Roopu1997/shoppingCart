@@ -177,7 +177,36 @@ router.get('/removeitem/:iName', function(req, res, next) {
 });
 
 router.get('/checkout', function(req, res, next) {
-  res.render('shop/checkout', { title: 'Make Payment' });
+  let messages = req.flash('error');
+  res.render('shop/checkout', { title: 'Make Payment', csrfToken: req.csrfToken, messages: messages, hasErrors: messages.length > 0});
+});
+
+router.post('/checkout', function(req, res, next) {
+  console.log(req.body.stripeToken);
+  // Set your secret key: remember to change this to your live secret key in production
+  // See your keys here: https://dashboard.stripe.com/account/apikeys
+  var stripe = require("stripe")("sk_test_xGsPPY56NvVFxpUstNeyfS51");
+  let Cart = req.session.cart;
+
+  // Token is created using Checkout or Elements!
+  // Get the payment token ID submitted by the form:
+  const token = req.body.stripeToken; // Using Express
+
+  stripe.charges.create({
+    amount: Cart.totalPrice * 100,
+    currency: 'usd',
+    description: 'My Shop test1',
+    source: token,
+  }, function (err, charge) {
+    if(err) {
+      req.flash('error', err.message);
+      res.redirect('/checkout');
+    }
+    // console.log({charge});
+    delete req.session.cart;
+    req.flash('info','Order Placed successfully');
+    res.redirect('/');
+  });
 });
 
 /*Shop routes end*/
@@ -233,9 +262,9 @@ router.get('/profile', isLoggedIn, function(req, res, next) {
 
 router.get('/logout', isLoggedIn, function(req, res, next) {
   req.logout();
-  req.session.destroy(function (err) {
+  // req.session.destroy(function (err) {
     res.redirect('/');
-  });
+  // });
 });
 /*User Management End*/
 
