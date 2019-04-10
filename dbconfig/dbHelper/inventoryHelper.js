@@ -1,4 +1,5 @@
 let db = require('../dbConnect');
+let ObjectID = require('mongodb').ObjectID;
 
 let addItem = function (item, callback) {
     db.get().collection('item').insertOne(item, function (err) {
@@ -8,38 +9,38 @@ let addItem = function (item, callback) {
         return callback(false);
     })
 };
-let readItem = function (callback) {
-    db.get().collection('item').find().toArray(function (err, item) {
+
+//method to read set number of items for each page in shop
+let readItem = function (curPage, pageLimit, callback) {
+    //skipping items depending on current page and reading a set number of items from db
+    db.get().collection('item')
+        .find()
+        .skip((curPage - 1) * pageLimit)
+        .limit(pageLimit)
+        .toArray(function (err, item) {
         if(err)
         {
             return callback(err);
         }
-        return callback(null, item)
+        //counting total number of items in db to calculate the total page required
+        db.get().collection('item').countDocuments(function (err, count) {
+            return callback(null, count, item)
+        })
     })
 };
 
-let searchItem = function (name, callback) {
-    // var idHex = new db.get().ObjectId.constructor(id);
-    // console.log(idHex);
-    db.get().collection('item').findOne({ iName: name }, function (err, item) {
+//finding an item by using id
+let searchItem = function (id, callback) {
+    let objectid = new ObjectID(id);
+    db.get().collection('item').findOne({ _id: objectid }, function (err, item) {
         if(err)
         {
             return callback(err);
         }
-        // console.log(item);
+        //console.log(item);
         return callback(null, item);
     });
 };
-
-/*User.find({},{_id:0}).toArray(function (err, result) {
-    if(err)
-    {
-        console.log('failed to read');
-        process.exit(1)
-    }
-    buffer = result;
-    console.log(result);
-});*/
 
 module.exports = {
     addItem, readItem, searchItem

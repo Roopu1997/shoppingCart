@@ -1,32 +1,33 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const hbs = require('hbs');
+const session = require('express-session');
+const passport = require('passport');
+const flash = require('connect-flash');
+const validator = require('express-validator');
+const MongoStore = require('connect-mongo')(session);
 
-let hbs = require('hbs');
-let session = require('express-session');
-let passport = require('passport');
-let flash = require('connect-flash');
-let validator = require('express-validator');
-let MongoStore = require('connect-mongo')(session);
+const db = require('./dbconfig/dbConnect');
 
-let db = require('./dbconfig/dbConnect');
+const indexRouter = require('./routes/index');
+const userRouter = require('./routes/user');
+const adminRouter = require('./routes/admin');
 
-var indexRouter = require('./routes/index');
-var userRouter = require('./routes/user');
+const app = express();
 
-var app = express();
+//async/await returns a promise (which can be ignored if needed?)
+db.connect()
+    .then((err) => {
+      if(!err) {
+        console.log("Database connected Successfully");
+      } else {
+        console.log("Error connecting to database")
+      }
+    });
 
-/*connecting to db*/
-db.connect(function (err) {
-  if(err){
-    console.log("Unable to connect to database");
-    process.exit(1);
-  }else{
-    console.log("Database connected");
-  }
-});
 require('./config/passport');
 
 // view engine setup
@@ -34,18 +35,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 hbs.registerPartials(__dirname + '/views/partials');
+//helper for showing page numbers(have to replace with js)
+hbs.registerHelper('loop', function (n, block) {
+  let result = '';
+  for (let i = 1; i <= n; i ++) {
+    result += block.fn(i);
+  }
+  return result;
+});
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(validator());
 app.use(cookieParser());
-/*session tracking*/
 app.use(session({
   secret:'mykey',
   resave: false,
   saveUninitialized: false,
-  store: new MongoStore({url: 'mongodb://localhost/shop'}),
+  store: new MongoStore({url: 'mongodb://localhost/shop'}), //check and use connection made using db.connect()
   cookie: { maxAge: 180 * 60 * 1000 }
 }));
 app.use(flash());
@@ -56,11 +64,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   res.locals.login = req.isAuthenticated();
   res.locals.session = req.session;
-  // res.locals.user = req.user;
   next();
 });
 
 app.use('/user', userRouter);
+app.use('/admin', adminRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

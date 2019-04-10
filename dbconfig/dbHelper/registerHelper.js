@@ -2,25 +2,48 @@ let db = require('../dbConnect');
 let bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-let registerUser = function (user, callback) {
-  db.get().collection('user').insertOne(user, function (err) {
-        if(err) {
-            return callback(err);
+const registerUser = async ({name, email, password}) => {
+    const User = db.get().collection('user');
+    try {
+        const user = await User.findOne({email: email});
+        if(user) {
+            return "Email already exists";
         }
-        return callback(false);
-    })
+        const hash = bcrypt.hashSync(password, saltRounds);
+        const newUser = {name, email, hash};
+        await User.insertOne(newUser);
+        return null;
+    } catch (err) {
+        if(err) {
+            return console.log(err);
+        }
+    }
+
 };
 
-//encrypt password
-let encryptPassword = function (password, register) {
-    bcrypt.hash(password, saltRounds, register);
+const getUserByID = (id, done) => {
+    let User = db.get().collection('user');
+    User.findOne({_id: id}, function (err, user) {
+        done(err, user);
+    });
 };
 
-//validate password
-let validatePassword = function (password, hashPass, callback) {
-    bcrypt.compare(password, hashPass, callback);
+const validatePass = (password, hash) => {
+    return bcrypt.compareSync(password, hash);
+};
+
+const authenticateUser = async (email, password, done) => {
+    const User = db.get().collection('user');
+    try {
+        const user = await User.findOne({email});
+        if(!user) return done(null, false, {message: "No user found!"});
+        if(!validatePass(password, user.hash)) return done(null, false, {message: "Wrong Password!"});
+        return done(null, user);
+    } catch(err) {
+        done(err);
+    }
 };
 
 module.exports = {
-    registerUser, encryptPassword, validatePassword
+    registerUser, getUserByID, authenticateUser
 };

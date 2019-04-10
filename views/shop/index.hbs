@@ -1,4 +1,4 @@
-<!--add a slide show featured items-->
+<!--add a slide show of featured items-->
 
 <!--shop items-->
 {{#if hasMessage}}
@@ -13,8 +13,32 @@
                 <hr>
                 <p class="card-text">{{this.iDesc}}</p>
                 <span class="btn"><b>${{this.iPrice}}</b></span>
-                <a href="/addtocart/{{this.iName}}" class="btn btn-success float-right">Add to Cart</a>
+                <a href="/addtocart/{{this._id}}" class="btn btn-success float-right">Add to Cart</a>
             </div>
         </div>
     {{/each}}
 </div>
+<nav id="page-navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" id="prev-link">
+            <a class="page-link" href="#" aria-label="Previous" id='prev-anchor'>
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        {{#loop totalPage}}
+            <!--add active class to current page-->
+            <li class="page-item" id="pg-{{this}}"><a class="page-link" href="/?page={{this}}">{{this}}</a></li>
+        {{/loop}}
+        <li class="page-item" id="next-link">
+            <a class="page-link" href="#" aria-label="Next" id='next-anchor'>
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<input type="hidden" id="totalPage" value="{{totalPage}}">
+<input type="hidden" id="curPage" value="{{curPage}}">
+
+<script src="/javascripts/pagination.js"></script>

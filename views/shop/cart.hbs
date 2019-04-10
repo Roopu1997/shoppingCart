@@ -9,8 +9,8 @@
                         <li class="list-group-item">
                             {{this.item.iName}}
                             <span class="badge badge-dark">x{{this.qty}}</span>
-                            <a href="/removeitem/{{this.item.iName}}" class="btn btn-danger btn-xs"  title="Remove item">x</a>
-                            <a href="/reduceitem/{{this.item.iName}}" class="btn btn-warning btn-xs" title="Reduce item">-</a>
+                            <a href="/removeitem/{{this.item._id}}" class="btn btn-danger btn-xs"  title="Remove item">x</a>
+                            <a href="/reduceitem/{{this.item._id}}" class="btn btn-warning btn-xs" title="Reduce item">-</a>
                             <span class="price">${{this.price}}</span>
                         </li>
                     {{/each}}
@@ -21,6 +21,7 @@
                 <a href="/checkout" class="btn btn-success">Checkout</a>
             {{ else }}
                 <div class="msg">No items in Cart!</div>
+                <div class="msg"><a href="/">Continue Shopping</a></div>
             {{/if}}
         </div>
     </div>

@@ -2,8 +2,15 @@
   box-sizing: border-box;
 }
 
+html {
+  position: relative;
+}
+
 body {
   padding-top: 56px;
+  padding-bottom: 50px;
+  min-height: 100vh;
+  margin-bottom: 0;
 }
 
 /* Navigation Menu Style Start */
@@ -38,6 +45,21 @@ nav.navbar .navbar-collapse ul {
 }
 
 /* Navigation Menu Style End */
+
+/*Footer style start*/
+
+footer {
+  display: block;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 0;
+  background: rgb(20, 20, 20);
+  text-align: center;
+}
+
+/*Footer style end*/
 
 /*Shop styles start*/
 
@@ -92,6 +114,12 @@ section.cart .row .msg {
   text-align: center;
   font-size: 20px;
   font-weight: 500;
+}
+
+section.cart .row .msg a {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 section.cart .row ul {
@@ -188,6 +216,10 @@ section.login .row h3 {
   text-align: center;
 }
 
+section.login .row .alert {
+  margin: 20px 40px;
+}
+
 section.login .row form {
   margin: 20px auto;
   padding: 20px 40px;
@@ -250,14 +282,3 @@ section.item .row form textarea {
 
 /*Admin Pages End*/
 
-/*Footer style start*/
-
-/*footer {
-  display: block;
-  color: white;
-  margin-bottom: 0;
-  background: rgba(0,0,0,0.9);
-  text-align: center;
-}*/
-
-/*Footer style end*/

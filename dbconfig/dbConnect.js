@@ -4,21 +4,21 @@ let state = {
     db: null
 };
 
-let connect = function(done) {
-    let url = 'mongodb://localhost:27017';
-
-    mongodb.connect(url, {useNewUrlParser: true}, function (err, db) {
-        if(err)
-            return done(err);
+const connect = async () => {
+    const url = 'mongodb://localhost:27017';
+    try {
+        const db = await mongodb.connect(url, {useNewUrlParser: true});
         state.db = db.db('shop');
-        return done();
-    })
+        return null;
+    } catch (err) {
+        return err;
+    }
 };
 
-let get = function () {
+const get = () => {
     return state.db;
 };
 
 module.exports = {
-    connect,get
+    connect, get
 };
