@@ -13,7 +13,7 @@ exports.loadShop = (req, res) => {
         const messages = req.flash('info');
 
         //redirecting to last page if queried page doesn't have any items
-        if(items.length === 0) {
+        if(items.length === 0 && curPage !== 1) {
             const newURL = '/?page=' + Math.ceil(count / pageLimit);
             res.redirect(newURL);
         } else {
